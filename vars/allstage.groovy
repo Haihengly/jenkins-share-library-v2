@@ -24,8 +24,15 @@ def call(Map config) {
 
         stages {
             stage('Checkout') {
-                steps {
-                    checkout scm
+                steps   {
+                    checkout([
+                        $class: 'GitSCM',
+                        branches: [[name: '*/master']],
+                        userRemoteConfigs: [[
+                            url: 'https://github.com/Haihengly/app-for-k8s-dev',
+                            // credentialsId: 'your-credentials-id'
+                        ]]
+                    ])
                 }
             }
 
