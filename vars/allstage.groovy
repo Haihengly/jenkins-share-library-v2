@@ -1,4 +1,4 @@
-okdef call(Map config) {
+def call(Map config) {
     pipeline {
         agent {
             docker {
