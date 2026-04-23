@@ -2,7 +2,7 @@ def call(Map config) {
     pipeline {
         agent {
             docker {
-                image 'haihengly/docker-agent:1.2'
+                image 'haihengly/docker-agent:1.1'
                 label 'agent-01'
                 args '''
                     -v /tmp/npm-cache:/home/jenkins/.npm
