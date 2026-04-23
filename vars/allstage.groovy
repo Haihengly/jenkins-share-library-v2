@@ -16,7 +16,7 @@ def call(Map config) {
         }
 
         environment {
-            DOCKER_IMAGE = config.dockerImage
+            DOCKER_IMAGE = "${config.dockerImage}"
             DOCKER_TAG = "${env.BUILD_NUMBER}"
             DOCKER_CREDENTIALS = 'dockerhub-credentials-id'
             ANSIBLE_CREDENTIALS = 'ansible-ssh-key'
