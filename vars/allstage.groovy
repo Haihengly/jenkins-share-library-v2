@@ -1,7 +1,7 @@
 def call(Map config) {
     pipeline {
-        agent {
-            docker {
+            agent {
+                docker  {
                 image 'haihengly/docker-agent:1.2'
                 label 'agent-01'
                 args '''
@@ -9,7 +9,7 @@ def call(Map config) {
                     -v /var/run/docker.sock:/var/run/docker.sock
                     -v /ansible:/ansible
                     --memory=4g
-                    --cpus=3
+                    --cpus=2
                     --group-add 988
                 '''
             }
