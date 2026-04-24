@@ -7,7 +7,7 @@ def call(Map config) {
             name: 'Checkout',
             action: { ->
                 echo "Checking out branch ${config.branch}"
-                checkout(config)
+                checkoutStage(config)
             }
         ],
         [
