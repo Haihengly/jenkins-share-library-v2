@@ -20,17 +20,17 @@ def call(Map config) {
                     echo "Skipping build stage"
                 }
             }
-        ],
-        [
-            name: 'Deploy',
-            action: { ->
-                if (deployFlag) {
-                    echo "Deploying version ${config.version} to ${config.envName}"
-                    deploy(config)
-                } else {
-                    echo "Skipping deploy stage"
-                }
-            }
         ]
+        // [
+        //     name: 'Deploy',
+        //     action: { ->
+        //         if (deployFlag) {
+        //             echo "Deploying version ${config.version} to ${config.envName}"
+        //             deploy(config)
+        //         } else {
+        //             echo "Skipping deploy stage"
+        //         }
+        //     }
+        // ]
     ]
 }

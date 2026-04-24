@@ -16,14 +16,14 @@ def call(Map config) {
                 '''
             }
         }
-        environment {
-            DOCKER_IMAGE = "${config.dockerImage}"
-            DOCKER_TAG = "${config.dockerTag}"
-            DOCKER_CREDENTIALS = 'dockerhub-credentials-id'
+        // environment {
+        //     DOCKER_IMAGE = "${config.dockerImage}"
+        //     DOCKER_TAG = "${config.dockerTag}"
+        //     DOCKER_CREDENTIALS = 'dockerhub-credentials-id'
             
-            ANSIBLE_CREDENTIALS = 'ansible-ssh-key'
+        //     ANSIBLE_CREDENTIALS = 'ansible-ssh-key'
             
-        }
+        // }
         stages {
             // Use a single stage to wrap dynamic stages in scripted block
             stage('Run Dynamic Stages') {
