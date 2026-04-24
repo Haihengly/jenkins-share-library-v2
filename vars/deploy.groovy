@@ -2,7 +2,7 @@ def call(Map config) {
 
     echo "Deploying application using Ansible"
     withCredentials([sshUserPrivateKey(
-        credentialsId: config.ansibleCredentials,
+        credentialsId: config.ansibleCredentialID,
         keyFileVariable: 'SSH_KEY',
         usernameVariable: 'SSH_USER'
     )]) {
