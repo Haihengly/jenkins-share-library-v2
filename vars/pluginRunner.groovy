@@ -1,6 +1,7 @@
 def call(String type, Map config) {
 
     def registry = [
+        check: { cfg -> checkoutPlugin(cfg) },
         build: { cfg -> buildPlugin(cfg) },
         deploy: { cfg -> deployPlugin(cfg) },
         test: { cfg -> testPlugin(cfg) }
