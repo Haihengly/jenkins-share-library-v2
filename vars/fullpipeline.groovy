@@ -1,5 +1,5 @@
 def call(Map config) {
-    def listStage = allstage(config)
+    // def listStage = allstage(config)
 
     pipeline {
         agent {
@@ -16,27 +16,20 @@ def call(Map config) {
                 '''
             }
         }
-        // environment {
-        //     DOCKER_IMAGE = "${config.dockerImage}"
-        //     DOCKER_TAG = "${config.dockerTag}"
-        //     DOCKER_CREDENTIALS = 'dockerhub-credentials-id'
-            
-        //     ANSIBLE_CREDENTIALS = 'ansible-ssh-key'
-            
-        // }
         stages {
-            // Use a single stage to wrap dynamic stages in scripted block
-            stage('Run Dynamic Stages') {
-                steps {
-                    script {
-                        for (s in listStage) {
-                            echo "Running : ${s.name}"
-                            // Wrap each dynamic stage in a 'stage' method (scripted)
-                            // stage(s.name) {
-                                s.action()
-                            // }
-                        }
-                    }
+            stage('Checkout') {
+                checkoutStage(config)
+            }
+
+            if (config.build) {
+                stage('Build') {
+                    build(config)
+                }
+            }
+
+            if (config.deploy) {
+                stage('Deploy') {
+                    deploy(config)
                 }
             }
         }
