@@ -1,24 +1,18 @@
 def call(String type, Map config) {
 
     def registry = [
-        build: this.&buildPlugin,
-        test: this.&testPlugin,
-        deploy: this.&deployPlugin
+        build: { cfg -> buildPlugin(cfg) },
+        deploy: { cfg -> deployPlugin(cfg) },
+        test: { cfg -> testPlugin(cfg) }
     ]
 
-    def pluginName = registry[type]
+    def plugin = registry[type]
 
-    if (!pluginName) {
-        error "Unknown plugin type: ${type}"
+    if (!plugin) {
+        error "❌ Unknown plugin: ${type}"
     }
 
-    def path = "plugins/${pluginName}.groovy"
+    echo "🚀 Running plugin: ${type}"
 
-    if (!fileExists(path)) {
-        error "Plugin not found: ${path}"
-    }
-
-    def plugin = load path
-
-    plugin.call(config)
+    plugin(config)
 }
