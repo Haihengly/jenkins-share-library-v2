@@ -1,16 +1,17 @@
 def call(Map config) {
 
-    def image = "${config.dockerImage}:${config.dockerTag ?: 'latest'}"
+    withCredentials([usernamePassword(
+        credentialsId: config.dockerCredentialsId,
+        usernameVariable: 'USER',
+        passwordVariable: 'PASS'
+    )]) {
 
-    echo "Building Docker image ${image}"
-    sh "docker build -t ${image} ."
+        sh """
+            echo \$PASS | docker login -u \$USER --password-stdin
 
-    echo "Pushing Docker image"
+            docker build -t ${config.dockerImage}:${config.dockerTag} .
 
-    docker.withRegistry('https://index.docker.io/v1/', config.dockerCredentialsId) {
-        def img = docker.image(image)
-        img.push()
+            docker push ${config.dockerImage}:${config.dockerTag}
+        """
     }
-
-    echo "Push completed"
 }
