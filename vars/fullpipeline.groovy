@@ -1,5 +1,5 @@
 def call(Map config) {
-    def listStage = allStage(config)
+    def listStage = allstage(config)
 
     pipeline {
         agent {
