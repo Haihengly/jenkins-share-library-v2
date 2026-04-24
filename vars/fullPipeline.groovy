@@ -21,13 +21,16 @@ def call(Map config) {
                 steps {
                     script {
                         config.stages.each { s ->
+
                             if (s.enabled == false) {
                                 echo "Skipping ${s.name}"
                                 return
                             }
-                            stage(s.name) {
-                                stageExecutor(s.type, config)
-                            }
+                            else {
+                                stage(s.name) {
+                                    stageExecutor(s.type, config)
+                                }
+                            } 
                         }
                     }
                 }
