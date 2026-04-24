@@ -17,7 +17,7 @@ def call(Map config) {
         }
 
         stages {
-            stage('Pipeline') {
+            stage('Running Dynamic Pipeline') {
                 steps {
                     script {
                         config.stages.each { s ->
