@@ -1,11 +1,26 @@
 def call(Map config) {
 
-    echo "Building Docker image ${config.dockerImage}:${config.dockerTag}"
-    sh "docker build -t ${config.dockerImage}:${config.dockerTag} ."
+    def image = "${config.dockerImage}:${config.dockerTag ?: 'latest'}"
 
-    echo "Pushing Docker image to registry"
-    docker.withRegistry('https://registry.hub.docker.com', config.dockerCredentials) {
-        docker.image("${config.dockerImage}:${config.dockerTag}").push()
+    echo "Building Docker image ${image}"
+    sh """
+        docker build -t ${image} .
+    """
+
+    echo "Logging in & pushing Docker image"
+
+    docker.withRegistry(
+        'https://registry.hub.docker.com',
+        config.dockerCredentialsId
+    ) {
+        def dockerImage = docker.image(image)
+        dockerImage.push()
+
+        // optional: also push latest tag
+        if (config.pushLatest == true) {
+            dockerImage.push('latest')
+        }
     }
-    
+
+    echo "Docker image pushed successfully"
 }
