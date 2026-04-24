@@ -1,9 +1,8 @@
 def call(Map config) {
-    // def listStage = allstage(config)
 
     pipeline {
         agent {
-            docker  {
+            docker {
                 image 'haihengly/docker-agent:1.2'
                 label 'agent-01'
                 args '''
@@ -16,7 +15,9 @@ def call(Map config) {
                 '''
             }
         }
+
         stages {
+
             stage('Checkout') {
                 steps {
                     echo "Checking out branch ${config.branch}"
@@ -24,32 +25,35 @@ def call(Map config) {
                 }
             }
 
-            if (config.build) {
-                stage('Build') {
-                    steps {
-                        echo "Building version ${config.version}"
+            stage('Build') {
+                when {
+                    expression { config.build == true }
+                }
+                steps {
+                    echo "Building version ${config.version}"
                     build(config)
-                    }
                 }
             }
 
-            if (config.deploy) {
-                stage('Deploy') {
-                    steps {
-                        echo "Deploying version ${config.version}"
-                        deploy(config)
-                    }
+            stage('Deploy') {
+                when {
+                    expression { config.deploy == true }
+                }
+                steps {
+                    echo "Deploying version ${config.version}"
+                    deploy(config)
                 }
             }
         }
+
         post {
-            success { 
+            success {
                 echo "Pipeline succeeded!"
             }
-            failure { 
+            failure {
                 echo "Pipeline failed!"
             }
-            unstable { 
+            unstable {
                 echo "Pipeline is unstable!"
             }
         }
