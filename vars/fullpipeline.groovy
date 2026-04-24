@@ -18,18 +18,27 @@ def call(Map config) {
         }
         stages {
             stage('Checkout') {
-                checkoutStage(config)
+                steps {
+                    echo "Checking out branch ${config.branch}"
+                    checkoutStage(config)
+                }
             }
 
             if (config.build) {
                 stage('Build') {
+                    steps {
+                        echo "Building version ${config.version}"
                     build(config)
+                    }
                 }
             }
 
             if (config.deploy) {
                 stage('Deploy') {
-                    deploy(config)
+                    steps {
+                        echo "Deploying version ${config.version}"
+                        deploy(config)
+                    }
                 }
             }
         }
