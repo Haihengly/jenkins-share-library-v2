@@ -1,9 +1,9 @@
 def call(String type, Map config) {
 
     def registry = [
-        build: 'buildPlugin',
-        test: 'testPlugin',
-        deploy: 'deployPlugin'
+        build: this.&buildPlugin,
+        test: this.&testPlugin,
+        deploy: this.&deployPlugin
     ]
 
     def pluginName = registry[type]
