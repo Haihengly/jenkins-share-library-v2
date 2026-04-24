@@ -32,9 +32,9 @@ def call(Map config) {
                         for (s in listStage) {
                             echo "Running : ${s.name}"
                             // Wrap each dynamic stage in a 'stage' method (scripted)
-                            stage(s.name) {
+                            // stage(s.name) {
                                 s.action()
-                            }
+                            // }
                         }
                     }
                 }
