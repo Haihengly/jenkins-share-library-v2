@@ -22,7 +22,7 @@ def call(Map config) {
                     script {
                         config.stages.each { s ->
 
-                            if (s.enabled == false) {
+                            if (s.type == deploy) {
                                 echo "Skipping ${s.name}"
                                 return
                             }
