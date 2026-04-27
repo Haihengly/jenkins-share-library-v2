@@ -1,5 +1,7 @@
 def call(Map config) {
 
+    def activeStages = config.stages.findAll { it.enabled }
+
     pipeline {
         agent {
             docker {
@@ -20,19 +22,24 @@ def call(Map config) {
             stage('Running Dynamic Pipeline') {
                 steps {
                     script {
-                        config.stages.each { s ->
+                        // config.stages.each { s ->
 
-                            if (s.enabled == false) {
-                                echo "⏭ Skipping ${s.name}"
+                        //     if (s.enabled == false) {
+                        //         echo "⏭ Skipping ${s.name}"
                                 
-                            } else {
+                        //     } else {
 
+                        //     stage(s.name) {
+                        //         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                        //                 stageExecutor(s.type, config)
+                        //             }
+                        //         }
+                        //     }
+                        // }
+                        activeStages.each { s ->
                             stage(s.name) {
-                                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                                    stageExecutor(s.type, config)
-                                }
+                                stageExecutor(s.type, config)
                             }
-                        }
                         }
                     }
                 }
