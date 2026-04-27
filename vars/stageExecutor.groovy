@@ -1,7 +1,5 @@
 def call(String type, Map config) {
 
-    echo "🔥 USING NEW stageExecutor"
-
     def registry = [
         check: { cfg -> checkoutStage(cfg) },
         build: { cfg -> buildStage(cfg) },
@@ -17,7 +15,7 @@ def call(String type, Map config) {
         error "❌ Unknown executor: ${type}"
     }
 
-    if (executor.enabled == false) {
+    if (executor(config).enabled == false) {
 
         echo "⏭ Skipping stage: ${type}"
 
