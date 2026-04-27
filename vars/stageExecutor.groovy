@@ -8,6 +8,7 @@ def call(String type, Map config) {
     ]
 
     def stageCfg = config.stages.find { it.type == type }
+    echo "DEBUG => type: ${type}, enabled: ${stageCfg?.enabled}"
 
     if (stageCfg?.enabled == false) {
         echo "⏭ Skipping stage: ${type}"
