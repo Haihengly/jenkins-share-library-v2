@@ -22,15 +22,15 @@ def call(Map config) {
                     script {
                         config.stages.each { s ->
 
-                            def enabled = (s.enabled != false) 
-
-                            if (!enabled) {
+                            if (s.enabled == false) {
                                 echo "⏭ Skipping ${s.name}"
                                 return
                             }
 
                             stage(s.name) {
-                                stageExecutor(s.type, config)
+                                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                                    stageExecutor(s.type, config)
+                                }
                             }
                         }
                     }
