@@ -1,5 +1,7 @@
 def call(Map config) {
 
+    config = sanitizeConfig(config)
+
     pipeline {
         agent {
             docker {
