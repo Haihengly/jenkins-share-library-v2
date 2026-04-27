@@ -8,12 +8,6 @@ def call(String type, Map config) {
     ]
 
     def stageCfg = config.stages.find { it.type == type }
-    echo "DEBUG => type: ${type}, enabled: ${stageCfg?.enabled}"
-
-    if (stageCfg?.enabled == false) {
-        echo "⏭ Skipping stage: ${type}"
-        return
-    }
 
     def executor = registry[type]
 
@@ -21,7 +15,14 @@ def call(String type, Map config) {
         error "❌ Unknown executor: ${type}"
     }
 
-    echo "🚀 Executing stage: ${type}"
+    if (stageCfg?.enabled == false) {
 
-    executor(config)
+        echo "⏭ Skipping stage: ${type}"
+
+    } else {
+
+        echo "🚀 Executing stage: ${type}"
+        executor(config)
+
+    }
 }
