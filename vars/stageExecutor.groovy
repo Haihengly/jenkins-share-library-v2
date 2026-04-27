@@ -15,7 +15,7 @@ def call(String type, Map config) {
         error "❌ Unknown executor: ${type}"
     }
 
-    if (executor(config).enabled == false) {
+    if (stageCfg?.enabled == false) {
 
         echo "⏭ Skipping stage: ${type}"
 
