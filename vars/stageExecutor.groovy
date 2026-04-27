@@ -3,6 +3,7 @@ def call(String type, Map config) {
     def registry = [
         check: { cfg -> checkoutStage(cfg) },
         build: { cfg -> buildStage(cfg) },
+        cleanup: { cfg -> cleanUpStage(cfg) },
         deploy: { cfg -> deployStage(cfg) },
         test: { cfg -> testStage(cfg) }
     ]
