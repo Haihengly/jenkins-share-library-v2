@@ -1,5 +1,7 @@
 def call(String type, Map config) {
 
+    echo "🔥 USING NEW stageExecutor"
+    
     def registry = [
         check: { cfg -> checkoutStage(cfg) },
         build: { cfg -> buildStage(cfg) },
