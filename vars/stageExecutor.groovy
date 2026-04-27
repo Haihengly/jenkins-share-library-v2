@@ -1,7 +1,36 @@
-def call(String type, Map config) {
+// def call(String type, Map config) {
 
-    echo "🔥 USING NEW stageExecutor"
-    
+//     echo "🔥 USING NEW stageExecutor"
+
+//     def registry = [
+//         check: { cfg -> checkoutStage(cfg) },
+//         build: { cfg -> buildStage(cfg) },
+//         deploy: { cfg -> deployStage(cfg) },
+//         test: { cfg -> testStage(cfg) }
+//     ]
+
+//     def stageCfg = config.stages.find { it.type == type }
+
+//     def executor = registry[type]
+
+//     if (!executor) {
+//         error "❌ Unknown executor: ${type}"
+//     }
+
+//     if (stageCfg?.enabled == false) {
+
+//         echo "⏭ Skipping stage: ${type}"
+
+//     } else {
+
+//         echo "🚀 Executing stage: ${type}"
+//         executor(config)
+
+//     }
+// }
+
+def call(Map stage, Map config) {
+
     def registry = [
         check: { cfg -> checkoutStage(cfg) },
         build: { cfg -> buildStage(cfg) },
@@ -9,22 +38,13 @@ def call(String type, Map config) {
         test: { cfg -> testStage(cfg) }
     ]
 
-    def stageCfg = config.stages.find { it.type == type }
-
-    def executor = registry[type]
+    def executor = registry[stage.type]
 
     if (!executor) {
-        error "❌ Unknown executor: ${type}"
+        error "❌ Unknown executor: ${stage.type}"
     }
 
-    if (stageCfg?.enabled == false) {
+    echo "🚀 Executing stage: ${stage.type}"
 
-        echo "⏭ Skipping stage: ${type}"
-
-    } else {
-
-        echo "🚀 Executing stage: ${type}"
-        executor(config)
-
-    }
+    executor(config)
 }
