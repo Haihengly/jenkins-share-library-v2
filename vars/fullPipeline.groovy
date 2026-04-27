@@ -24,14 +24,15 @@ def call(Map config) {
 
                             if (s.enabled == false) {
                                 echo "⏭ Skipping ${s.name}"
-                                return
-                            }
+                                
+                            } else {
 
                             stage(s.name) {
                                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                                     stageExecutor(s.type, config)
                                 }
                             }
+                        }
                         }
                     }
                 }
