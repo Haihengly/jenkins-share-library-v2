@@ -7,7 +7,8 @@ def call(String type, Map config) {
         test: { cfg -> testStage(cfg) }
     ]
 
-    def executor = registry[type]
+    def key = type?.toLowerCase()
+    def executor = registry[key]
 
     // ✅ Unknown stage type
     if (!executor) {
