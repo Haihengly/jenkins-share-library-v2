@@ -9,11 +9,21 @@ def call(String type, Map config) {
 
     def executor = registry[type]
 
+    // ✅ Unknown stage type
     if (!executor) {
-        error "❌ Unknown executor: ${type}"
+        error "❌ Unknown stage type: '${type}' — available: ${registry.keySet()}"
     }
 
     echo "🚀 Executing stage: ${type}"
 
-    executor(config)
+    try {
+        executor(config)
+        echo "✅ Stage '${type}' completed successfully"
+
+    } catch (Exception e) {
+        // ✅ Shows exactly which stage failed and why
+        echo "❌ Stage '${type}' failed!"
+        echo "📋 Error: ${e.getMessage()}"
+        throw e  // rethrow so Jenkins marks build as failed
+    }
 }
