@@ -7,6 +7,13 @@ def call(String type, Map config) {
         test: { cfg -> testStage(cfg) }
     ]
 
+    def stageCfg = config.stages.find { it.type == type }
+
+    if (stageCfg?.enabled == false) {
+        echo "⏭ Skipping stage: ${type}"
+        return
+    }
+
     def executor = registry[type]
 
     if (!executor) {
