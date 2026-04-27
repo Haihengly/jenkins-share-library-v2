@@ -12,6 +12,6 @@ def call(Map config) {
             docker build -t ${config.dockerImage}:${config.dockerTag} .
 
             docker push ${config.dockerImage}:${config.dockerTag}
-        """
+        """ws
     }
 }
