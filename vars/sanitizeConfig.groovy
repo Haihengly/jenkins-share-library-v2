@@ -1,4 +1,4 @@
-def prepareConfig(Map config) {
+def call(Map config) {
 
     config.stages = config.stages.collect { s ->
 
