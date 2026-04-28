@@ -1,4 +1,4 @@
-def (Map config) {
+def call(Map config) {
 
     if (!config) {
         error "❌ Config is empty"
