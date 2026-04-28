@@ -22,6 +22,13 @@ def call(Map config) {
         }
 
         stages {
+            stage('Validate Config') {
+                steps {
+                    script {
+                        validateConfig(config)
+                    }
+                }
+            }
             stage('Running Dynamic Pipeline') {
                 steps {
                     script {
